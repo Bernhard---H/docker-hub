@@ -107,7 +107,5 @@ RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources
 RUN apt-get update && apt-get install -y yarn
 
 
-ENV LANG en_US.UTF-8
-
-
+#ENV LANG en_US.UTF-8
 
