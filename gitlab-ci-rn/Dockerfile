@@ -13,6 +13,7 @@ RUN apt-get update && \
     unzip -y && \
     apt-get clean
 
+
 # —————————— 
 # Install Java. 
 # —————————— 
@@ -28,6 +29,7 @@ RUN \
 # Define commonly used JAVA_HOME variable 
 ENV JAVA_HOME /usr/lib/jvm/java-8-oracle 
 
+
 # —————————— 
 # Installs i386 architecture required for running 32 bit Android tools 
 # —————————— 
@@ -39,12 +41,13 @@ RUN dpkg --add-architecture i386 && \
     apt-get autoremove -y && \
     apt-get clean
 
+
 # —————————— 
 # Installs Android SDK 
 # —————————— 
 
 ENV ANDROID_SDK_VERSION r24.4.1 
-ENV ANDROID_BUILD_TOOLS_VERSION build-tools-25.0.2,build-tools-23.0.2,build-tools-23.0.3,build-tools-23.0.1 
+ENV ANDROID_BUILD_TOOLS_VERSION build-tools-26.0.1,build-tools-23.0.2,build-tools-23.0.3,build-tools-23.0.1
 
 ENV ANDROID_SDK_FILENAME android-sdk_${ANDROID_SDK_VERSION}-linux.tgz 
 ENV ANDROID_SDK_URL http://dl.google.com/android/${ANDROID_SDK_FILENAME} 
@@ -58,6 +61,7 @@ RUN cd /opt && \
     rm ${ANDROID_SDK_FILENAME} && \
     echo y | android update sdk --no-ui -a --filter tools,platform-tools,${ANDROID_API_LEVELS},${ANDROID_BUILD_TOOLS_VERSION} && \
     echo y | android update sdk --no-ui --all --filter "${ANDROID_EXTRA_COMPONENTS}"
+
 
 # —————————— 
 # Installs Gradle 
@@ -76,11 +80,12 @@ RUN cd /usr/lib \
 ENV GRADLE_HOME /usr/lib/gradle 
 ENV PATH $PATH:$GRADLE_HOME/bin 
 
+
 # —————————— 
 # Install Node and global packages 
 # —————————— 
 
-ENV NODE_VERSION 6.10.2 
+ENV NODE_VERSION 6.11.3
 RUN cd && \
     wget -q http://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-x64.tar.gz && \
     tar -xzf node-v${NODE_VERSION}-linux-x64.tar.gz && \
@@ -88,12 +93,18 @@ RUN cd && \
     rm node-v${NODE_VERSION}-linux-x64.tar.gz
 ENV PATH ${PATH}:/opt/node/bin
 
+
 # —————————— 
 # Install Basic React-Native packages 
 # —————————— 
 
 RUN npm install react-native-cli -g
-RUN npm install yarn -g
+
+# install yarn
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+RUN apt-get update && apt-get install -y yarn
+
 
 ENV LANG en_US.UTF-8
 
