@@ -11,6 +11,7 @@ RUN apt-get update && \
     git \
     lftp \
     apt-transport-https \
+    imagemagick \
     unzip -y && \
     apt-get clean
 
