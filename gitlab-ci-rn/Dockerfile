@@ -87,7 +87,7 @@ ENV PATH $PATH:$GRADLE_HOME/bin
 # Install Node and global packages 
 # —————————— 
 
-ENV NODE_VERSION 6.11.3
+ENV NODE_VERSION 8.11.4
 RUN cd && \
     wget -q http://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-x64.tar.gz && \
     tar -xzf node-v${NODE_VERSION}-linux-x64.tar.gz && \
