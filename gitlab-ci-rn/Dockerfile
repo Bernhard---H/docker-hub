@@ -5,7 +5,6 @@ FROM ubuntu:18.04
 # Install base software packages 
 RUN apt-get update && \
     apt-get install software-properties-common \
-    python-software-properties \
     wget \
     curl \
     git \
